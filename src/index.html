@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<ul id="cp"></ul>
+<button class="cp-button">CP</button>
+
+<script>
+    let button = document.querySelectorAll(".cp-button");
+    button.forEach(function (button) {
+        button.addEventListener("click", function () {
+            fetch("ajax.php", {method: "GET"})
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Erreur HTTP : ${response.status}`);
+                    }
+                    // Sinon, si la requête a réussi, le gestionnaire récupère
+                    // la réponse sous forme de texte en appelant response.text(),
+                    // Et renvoie immédiatement la promesse renvoyée par response.text().
+                    return response.json();
+                })
+                .then(function (data) {
+                    let div = document.getElementById("cp");
+                    //data = JSON.parse(data);
+                    for (const [key, value] of Object.entries(data)) {
+                        div.innerHTML += `<li>${key}: ${value}</li>`;
+                    }
+                });
+        })
+    })
+</script>
+
+</body>
+</html>
