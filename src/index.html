@@ -8,14 +8,40 @@
     <title>Document</title>
 </head>
 <body>
+
 <ul id="cp"></ul>
 <button class="cp-button">CP</button>
 
+<label for="ice-cream-choice">Choose a flavor:</label>
+<input list="ice-cream-flavors" id="ice-cream-choice" name="ice-cream-choice"/>
+<datalist id="ice-cream-flavors">
+<!--    <option value="Chocolate"></option>-->
+<!--    <option value="Coconut"></option>-->
+<!--    <option value="Mint"></option>-->
+<!--    <option value="Strawberry"></option>-->
+<!--    <option value="Vanilla"></option>-->
+</datalist>
+
+
 <script>
+
+    let input = document.getElementById('ice-cream-choice')
+    input.addEventListener('input', function () {
+
+        if(input.value.length >= 1){
+            fetch("ajaxList.php?value="+input.value)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('ice-cream-flavors').innerHTML = data;
+                })
+        }
+    });
+
+
     let button = document.querySelectorAll(".cp-button");
     button.forEach(function (button) {
         button.addEventListener("click", function () {
-            fetch("ajax.php", {method: "GET"})
+            fetch("ajax.php", {method: "PUT"})
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error(`Erreur HTTP : ${response.status}`);

@@ -3,11 +3,7 @@
 
 namespace App;
 
-require_once '../vendor/autoload.php';
-
-use App\controller\Controller;
-
-$controller = new Controller();
+var_dump($_SERVER);
 
 $valeurs = [
     '67000' => ['Strasbourg'],
